@@ -1,9 +1,11 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
 import { askGemini } from "./gemini";
 import { errorHandler } from "./errorHandler";
 import { AppError } from "./error";
+import { openapiSpec } from "./openapi";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -41,12 +43,15 @@ app.post("/chat", async (req, res, next) => {
   }
 });
 
-app.get("/health", (req, res) => {
+app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(openapiSpec));
 
 app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`API docs at http://localhost:${PORT}/docs`);
 });
