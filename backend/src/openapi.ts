@@ -7,7 +7,7 @@ const errorResponse = {
 };
 
 export const openapiSpec = {
-  openapi: "1.0.0",
+  openapi: "3.0.3",
   info: {
     title: "Gemini Chat API",
     version: "1.0.0",
